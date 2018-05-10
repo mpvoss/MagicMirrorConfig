@@ -195,7 +195,7 @@ sup {
 
 .region.bottom.right,
 .region.bottom.left {
-  padding-bottom: 6.5cm;
+/*  padding-bottom: 6.5cm;*/
   bottom: 100%;
 }
 .region.bottom.center{

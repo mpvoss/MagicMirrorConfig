@@ -6,13 +6,27 @@
 
 var config = {
     port: 8080,
-    ipWhitelist: ["192.168.0.11","192.168.0.6","0.0.0.0","127.0.0.1", "::ffff:127.0.0.1", "::1","localhost"], // Set [] to allow all IP addresses.
+    ipWhitelist: ["192.168.0.11","192.168.0.6","0.0.0.0","127.0.0.1", "::ffff:127.0.0.1", "::1","localhost","192.168.254.11"], // Set [] to allow all IP addresses.
 
     language: "en-us",
     timeFormat: 12,
     units: "imperial",
 
     modules: [
+	    {module: 'MMM-Carousel',
+	                config: {
+				                transitionInterval: 20000,
+				                ignoreModules: ['clock', 'alert','newsfeed','currentweather','weatherforecast'],
+				                mode: 'slides',
+				                slides: [
+							                    ['compliments'],
+									    ['MMM-ImageSlideshow'],
+									    ['MMM-Reddit'],
+							                    ['internet-monitor','MMM-ip','MMM-SystemStats'],
+							                    ['MMM-Chart', 'portfolioMirror'],
+							                ]
+				            }
+	            },
         {
             module: "alert",
         },
@@ -20,14 +34,6 @@ var config = {
         {
             module: "clock",
             position: "top_left"
-        },
-        {
-            module: 'stocks',
-            position: "bottom_right",
-            config: {
-                symbols: ['^SPX', '^VIX']
-                
-            }
         },
         {
             module: "newsfeed",
@@ -49,13 +55,32 @@ var config = {
                 ]
             }
         },
+	    {
+		    		module: "compliments",
+		    		position: "bottom_bar",
+		     		config: {
 
+					updateInterval: 15000,
+					classes: "thin bright medium",
+					remoteFile: "quotes.json"
+				}},
+
+	    {
+		    		module: 'MMM-ImageSlideshow',
+		    		position: 'bottom_center',
+		    		config: {
+					fixedImageWidth: 600,
+					fixedImageHeight: 450,
+					imagePaths: ['modules/MMM-ImageSlideshow/pics']
+							}
+		    	},
+		     														
         {
             module: "currentweather",
             position: "top_right",
             config: {
-                location: "Lewisville",
-                locationID: "4706057",  //ID from http://www.openweathermap.org/help/city_list.txt
+                location: "Carrollton",
+                locationID: "4679195",  //ID from http://www.openweathermap.org/help/city_list.txt
                 appid: "2e6711b8a9a8524acfa0a8af26396b5c"
             }
         },
@@ -64,15 +89,15 @@ var config = {
             position: "top_right",
             header: "Weather Forecast",
             config: {
-                location: "Lewisville",
-                locationID: "4706057",  //ID from http://www.openweathermap.org/help/city_list.txt
+                location: "Carrollton",
+                locationID: "4679195",  //ID from http://www.openweathermap.org/help/city_list.txt
                 appid: "2e6711b8a9a8524acfa0a8af26396b5c"
             }
         },
         {module: "portfolioMirror", position: "bottom_left"},
         {
             module: 'MMM-Chart',
-            position: 'bottom_center',
+            position: 'bottom_bar',
             header: 'VIX Stochastic Oscillator',
             config: {
                 name: "vix_oscillator",
@@ -92,7 +117,58 @@ var config = {
                 graphScaleStepSize0: 100,
                 graphScaleStepSize1: 100,   
             }
-        }
+        },
+	    {
+		    	    module: 'internet-monitor',
+		                position: 'bottom_bar',
+		                header: 'Internet Monitor',
+		                config:{
+					                type: '',
+					                maxTime: 20000,
+					                updateInterval: 0,
+					                verbose: false,
+					                displayStrength: false,
+					                displaySpeed: true,
+					                strengthIconSize: 80,
+					                maxGaugeScale: 100,
+					            },
+		    	},
+	    {
+		        module: 'MMM-ip',
+		        position: 'bottom_left',
+		        config: {
+				fontSize: 18,dimmed: true
+				    }
+	    },
+
+	    {
+		    		module: 'MMM-SystemStats',
+		    		position: 'bottom_right', // This can be any of the regions.
+		    		classes: 'small dimmed', // Add your own styling. Optional.
+		    		config: {language: 'en',
+								updateInterval: 10000,
+								animationSpeed: 0,
+								align: 'right', // align labels
+								//header: 'System Stats', // This is optional
+							},
+								},
+
+	    {
+		    	module: "MMM-Reddit",
+		    	position: "bottom_center",
+		    	config: {
+				subreddit: ['news','worldnews','politics'],
+					showHeader: false, headerType: 'sentence',
+					displayType: 'headlines',
+					count: 12,
+					show: 4,
+					width: 700,
+					showScore: true,
+					showSubreddit: true,
+					colorText: true,
+					showThumbnail: false,
+					}
+	    },
 
 
     ]
